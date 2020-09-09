@@ -18,11 +18,9 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+require('dotenv').config()
+const Web3 = require('web3');
+const net = require('net');
 
 module.exports = {
   /**
@@ -43,16 +41,25 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 8545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      provider: () => new Web3.providers.IpcProvider(process.env.GETH_IPC_PATH, net),
+      network_id: "15",
+      gas: 2000000,
+      gasPrice: 20000000000,
     },
 
     // This is the rinkeby fork running in Ganache
     rinkebylocal: {
       host: '127.0.0.1',
       port: 8545,
-      network_id: '4',
+      network_id: 4,
+      skipDryRun: true,
+      gas: 6000000
+    },
+
+    // This is the ropesten running in Geth
+    ropstengeth: {
+      provider: () => new Web3.providers.IpcProvider(process.env.GETH_IPC_PATH, net),
+      network_id: 3,
       skipDryRun: true,
       gas: 6000000
     }

@@ -1,6 +1,6 @@
 # Uniswap Exchange Fork
 
-Repo shows forking ganache to interact with deploeyed Uniswap contracts as if they were local. New exchanges, tokens and so on that are created during the truffle terminal session remain local.
+Repo shows forking ganache to interact with deployed Uniswap contracts as if they were local. New exchanges, tokens and so on that are created during the truffle terminal session remain local.
 
 This experiment was contuctted using [Uniswap V1](https://uniswap.org/docs/v1)
 
@@ -35,7 +35,7 @@ compile
 
 migrate --reset
 
-// https://hackmd.io/SHPZJPSUTSW8se71CP_TBA#Uniswap-Rinkeby-Testnet-2
+// https://uniswap.org/docs/v1/frontend-integration/connect-to-uniswap/
 factory_address = '0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36'
 
 // Initialize a UniswapFactory instance from the deployed address (on Rinkeby)
@@ -66,3 +66,7 @@ const deadline = Math.floor(Date.now() / 1000) + 300
 // Add liquidity to the exchange
 await gldTokenExchangeInstance.addLiquidity(minLiquidity, maxTokens, deadline, { value: 5000000000000000000 })
 ```
+
+### Mainnet Uniswap Exchange
+
+https://etherscan.io/address/0xc0a47dfe034b400b47bdad5fecda2621de6c4d95#events
