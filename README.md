@@ -8,7 +8,7 @@ This experiment was contuctted using [Uniswap V1](https://uniswap.org/docs/v1)
 
 Ganache can be started as a fork from another network. Using Infura this can easily be set to mainnet or any of the testnets.
 
-Run the command below to start a local ganche blockchin that is forked from rinkeby. Replace `<YOUR_INFURA_PROJECT_ID>` with your value and replace `<BLOCK_NUMBER_TO_FORK_FROM>` with the [blocknumber](https://rinkeby.etherscan.io/tx/0x24eac955e39f96d5abc2b42cdd2bdcef193ecc4718469d856ca6bb9906330a47) of your choice.
+Run the command below to start a local ganche blockchain that is forked from rinkeby. Replace `<YOUR_INFURA_PROJECT_ID>` with your value and replace `<BLOCK_NUMBER_TO_FORK_FROM>` with the [blocknumber](https://rinkeby.etherscan.io/tx/0x24eac955e39f96d5abc2b42cdd2bdcef193ecc4718469d856ca6bb9906330a47) of your choice.
 
 ```
 ganache-cli --fork https://rinkeby.infura.io/v3/<YOUR_INFURA_PROJECT_ID>@<BLOCK_NUMBER_TO_FORK_FROM>
@@ -16,11 +16,17 @@ ganache-cli --fork https://rinkeby.infura.io/v3/<YOUR_INFURA_PROJECT_ID>@<BLOCK_
 
 ## Interact with the contracts in Truffle Console
 
-Start up a truffle console like so
+Start up a truffle console like so. This will connect to the running local ganache blockchain that is already forked from rinkeby.
 
 ```
 truffle console --network rinkebylocal
 ```
+
+In our truffle project we have our own ERC-20 token (GLDToken) that we want to test out using Uniswap. However, for now we want to keep everything under a local development environment while still being able to interact with the Smart Contracts on the live (Rinkey) network.
+
+The way I have done this is to copy in the [Uniswap V1 Interfaces](https://uniswap.org/docs/v1/smart-contracts/interfaces/) into the `contracts` directory of this project and then created contracts from these interfaces that can be used as a *wrapper* to load the deployed instances of the contracts from the forked network deployed addresses.
+
+NOTE: I comment out the declared variables in the interface otherwise there is compile error.
 
 Now try the following in the console window.
 
