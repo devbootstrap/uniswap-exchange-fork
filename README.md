@@ -35,8 +35,19 @@ Now try the following in the console window.
 ```
 compile
 
+// Deploy the GLDToken contract which allocates the total supply to the owner account (account[0])
 migrate --reset
 
+// Get the deployed instance of our GLD Token
+const gldToken = await GLDToken.deployed()
+
+// Get the total supply of tokens available
+tokenSupply = (await gldToken.totalSupply()).toString()
+
+// Check the balance of the GLDToken with the owner account
+(await gldToken.balanceOf(accounts[0])).toString()
+
+// Set factory_address to the deployed factory address on Rinkeby
 // https://uniswap.org/docs/v1/frontend-integration/connect-to-uniswap/
 factory_address = '0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36'
 
@@ -46,27 +57,29 @@ const factoryInstance = await UniswapFactory.at(factory_address)
 // Deploy UniswapExchange for GLD Token
 await factoryInstance.createExchange(GLDToken.address)
 
-// Get the deployed instance of our GLD Token
-const gldToken = await GLDToken.deployed()
-
 // Get the GLD Token Exchange address
 const gldTokenExchangeAddress = await factoryInstance.getExchange(GLDToken.address)
 
 // Approve GLDToken UniswapExchange contract to transfer GLDToken
-await gldToken.approve(gldTokenExchangeAddress, 10000)
+await gldToken.approve(gldTokenExchangeAddress, tokenSupply)
+
+// Check that the allowance has been added as expected
+(await gldToken.allowance(accounts[0], gldTokenExchangeAddress)).toString()
 
 // Get the GLD Token Exchange instance
 const gldTokenExchangeInstance = await UniswapExchange.at(gldTokenExchangeAddress)
 
 // Set liquidity parameters
-const minLiquidity = 0
+let ethAmount = await web3.utils.toWei('1')
+const deadline = 1839591241
 
-const maxTokens = 500
+// THEREFORE: 0.0001 ETH = 1 GLD TOKEN
 
-const deadline = Math.floor(Date.now() / 1000) + 300
+// Add all my GLD TokenSupply (100000) as liquidity to the exchange
+await gldTokenExchangeInstance.addLiquidity(ethAmount, tokenSupply, deadline, { value: ethAmount})
 
-// Add liquidity to the exchange
-await gldTokenExchangeInstance.addLiquidity(minLiquidity, maxTokens, deadline, { value: 5000000000000000000 })
+// Check the balance of the GLDToken with the exchange account
+(await gldToken.balanceOf(gldTokenExchangeAddress)).toString()
 ```
 
 ### Mainnet Uniswap Exchange
