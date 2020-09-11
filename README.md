@@ -2,6 +2,8 @@
 
 Repo shows forking ganache to interact with deployed Uniswap contracts as if they were local. New exchanges, tokens and so on that are created during the truffle terminal session remain local.
 
+If you are using a local Geth node then follow the [README for using Geth instead](./geth/README.md). The remaining instructions here are for using a forked local Ganache node from Rinkeby testner.
+
 This experiment was contuctted using [Uniswap V1](https://uniswap.org/docs/v1)
 
 ## Start Ganache as a fork from Rinkeby
