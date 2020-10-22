@@ -4,7 +4,7 @@ Repo shows forking ganache to interact with deployed Uniswap contracts as if the
 
 If you are using a local Geth node then follow the [README for using Geth instead](./geth/README.md). The remaining instructions here are for using a forked local Ganache node from Rinkeby testner.
 
-This experiment was contuctted using [Uniswap V1](https://uniswap.org/docs/v1)
+This experiment was conducted using [Uniswap V1](https://uniswap.org/docs/v1)
 
 ## Start Ganache as a fork from Rinkeby
 
@@ -30,7 +30,7 @@ The way I have done this is to copy in the [Uniswap V1 Interfaces](https://unisw
 
 NOTE: I comment out the declared variables in the interface otherwise there is compile error.
 
-Now try the following in the console window.
+Now try the following in the `truffle console` window.
 
 ```
 compile
@@ -48,6 +48,7 @@ tokenSupply = (await gldToken.totalSupply()).toString()
 (await gldToken.balanceOf(accounts[0])).toString()
 
 // Set factory_address to the deployed factory address on Rinkeby
+// Remember we are using Uniswap V1 in this demo! :)
 // https://uniswap.org/docs/v1/frontend-integration/connect-to-uniswap/
 factory_address = '0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36'
 
